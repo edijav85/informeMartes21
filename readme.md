@@ -1,67 +1,152 @@
-#### Tec_Web_EL
-# Repositorio de Tecnologias Web con Js
+# DEBER DE TECNOLOGÍAS WEB CON JAVASCRIPT
+-------------------------------------------
+###Materia: Tecnologias Web con Java Script
+###Tema: Introduccion a la Web
+###Fecha: 27/10/2016
+###Profesor:TANIA CALLE Y ADRIAN EGUEZ
 
-Este repositorio forma parte del  [curso de tecnologias web](https://github.com/adrianeguez/Tec_Web_Js_2016_B)
+#INDICE DE CONTENIDOS
+-------------------------------------------
+- <a href="#tema">Tema</a>
+- <a href="#objetivos">Objetivos</a>
+- <a href="#marco-teorico">Modelo de la BDD</a>
+ * <a href="#modelo_bdd">Script de la BDD</a>
+ * <a href="#script_bdd">Github</a>
+- <a href="#desarrollo">Desarrollo de la Práctica</a>
+- <a href="#conrec">Conclusiones y Recomendaciones</a>
 
-## Enfasis de Texto
+<a name="tema"></a>
+## Tema
+Script y Modelo de la Base de Datos
 
-* Para nosotros utilizar un texto en **negrita** se utilizan dos "**" (asteriscos).
-* Para nosotros utilizar un texto en *cursiva* vamos a utilizar 1 "*" (asterisco).
-* Para nosotros ~~tachar un texto~~ necesitas usar "~" (tildes).
+<a name="objetivos"></a>
+## Objetivos
 
-## Listas Ordenadas
+- Dar a conocer el modelo de la base de datos que se utilizará para el proyecto del segundo bimestre
+- Dar a conocer el script de la base de datos que se utilizará para el proyecto del segundo bimestre
+- Indicar algunos detalles de los modelos ateriormente mencionados
+- Dar a conocer las diferentes tablas que se emplearán en la bdd en referencia al proyecto del segundo bimestre
 
-1. El numero
-2. De las listas
-  * Lista no ordenada 1 (dos espacios " " antes del asterisco)
-  * Lista no ordenada 2 (dos espacios " " antes del asterisco)
+<a name="marco-teorico"></a>
+## Marco Teorico
 
-2. De las listas
-1. Ordenadas
-  1. Esta si es una lista ordenada (con dos espacios " " antes de los numeros )
-  1. Esta es la segunda lista ordenada (con dos espacios " " antes de los numeros )
-4. no Importa
+El proyecto que se tiene contemplado es la creacion de un sitio, el mismo que oferte zapatos para damas.
+La necesidad de crear un sitio como tal es en base a las demandas creadas por personas que tienen la tendencia de comprar calzado para cada tipo
+de salida.
 
-## Links
 
-Para utilizar un [Link](https://github.com/adrianeguez/Tec_Web_Js_2016_B) debemos de encerrar el texto en brackets [] seguido del URL en parentesis ()
 
-## Imagenes
 
-Para nosotros utilizar imagenes debemos de colocar un texto alternativo en brackets[] despues del caracter de exclamasion ! y el link de la imagen entre parentesis ()
-![Imagen de Js en color amarillo](http://nodeframework.com/assets/img/js.png "Javascript")
-## Formateo de Codigo
+###<a name="script_bdd">Script de la BDD</a>
 
-Para nosotros utilizar el formateo de codigo dentro de texto plano debemos de utilizar el caracter `Tilde invertida`
+A continuacion se presenta el escript que se hizo correr en el programa PostgreSQL
 
-Para utilizar el formateo de codigo en un bloque de codigo necesitamos utilizar 3 `Tildes invertidas` donde se puede especificar el lenguaje de programacion a usarse para el formateo del codigo, justo despues de las 3 `Tildes invertidas`
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+drop database if exists TZAPATOS;
+create database TZAPATOS;
 
-* Bloque de codigo con `javascript`
+CREATE TABLE EMPLEADOS(
+EMPLEADOID int NOT NULL,
+NOMBRE char(30) NULL,
+APELLIDO char(30) NULL,
+FECHA_NAC date NULL,
+REPORTA_A int NULL,
+EXTENSION int NULL,
+CONSTRAINT PK_EMPLEADOS PRIMARY KEY (EMPLEADOID));
 
-```javascript
-var mensaje="Hola mundo";
-```
+CREATE TABLE PROVEEDORES(
+PROVEEDORID int NOT NULL,
+NOMBREPROV char(50) NOT NULL,
+CONTACTO char(50) NOT NULL,
+CELUPROV char(12) NULL,
+FIJOPROV char(12) NULL,
+CONSTRAINT PK_PROVEEDORES PRIMARY KEY
+(PROVEEDORID ) );
 
-* Bloque de codigo de una `consola`
+CREATE TABLE CATEGORIAS(
+CATEGORIAID int NOT NULL,
+NOMBRECAT char(50) NOT NULL,
+CONSTRAINT PK_CATEGORIAS PRIMARY KEY
+(CATEGORIAID) ) ;
 
-```
-> apt-get update paquete
-```
+CREATE TABLE CLIENTES(
+CLIENTEID int NOT NULL,
+CEDULA_RUC char(10) NOT NULL,
+NOMBRECIA char(30) NOT NULL,
+NOMBRECONTACTO char(50) NOT NULL,
+DIRECCIONCLI char(50) NOT NULL,
+EMAIL char(50) NULL,
+CELULAR char(12) NULL,
+FIJO char(12) NULL,
+CONSTRAINT PK_CLIENTES PRIMARY KEY
+(CLIENTEID) );
 
-* Bloque de HTML
+CREATE TABLE ORDENES(
+ORDENID int NOT NULL,
+EMPLEADOID int NOT NULL,
+CLIENTEID int NOT NULL,
+FECHAORDEN date NOT NULL,
+DESCUENTO int NULL,
+CONSTRAINT PK_ORDENES PRIMARY KEY
+(ORDENID) );
 
-```
-<html>
-</html>
-```
 
-##Tablas
+CREATE TABLE DETALLE_ORDENES(
+ORDENID int NOT NULL,
+DETALLEID int NOT NULL,
+PRODUCTOID int NOT NULL,
+CANTIDAD int NOT NULL,
+CONSTRAINT PK_DETALLE_ORDENES PRIMARY KEY
+(ORDENID,DETALLEID ) );
 
-Para usar tablas necsitamos definir las filas con |
+CREATE TABLE PRODUCTOS(
+PRODUCTOID int NOT NULL,
+PROVEEDORID int NOT NULL,
+CATEGORIAID int NOT NULL,
+DESCRIPCION char(50) NULL,
+PRECIOUNIT numeric NOT NULL,
+EXISTENCIA int NOT NULL,
+CONSTRAINT PK_PRODUCTOS PRIMARY KEY
+(PRODUCTOID )) ;
 
-|Columna 1|Columna 2|Columna 3|Columna 4|
-|-|-|-|-|
-|Valor 1 C1|Valor 2 C2|Valor 3 C3|Valor 4 C4|
-|Valor 5 C1|Valor 6 C2|Valor 7 C3|Valor 8 C4|
-|Valor 1 C1|Valor 2 C2|Valor 3 C3|Valor 4 C4|
-|Valor 1 C1|Valor 2 C2|Valor 3 C3|Valor 4 C4|
+ALTER TABLE ORDENES
+ADD CONSTRAINT FK_ORDENES_CLIEN_ORD_CLIENTES FOREIGN KEY(CLIENTEID)
+REFERENCES CLIENTES (CLIENTEID)
+on delete restrict on update restrict;
+
+ALTER TABLE ORDENES ADD CONSTRAINT FK_ORDENES_EMPLE_ORD_EMPLEADO FOREIGN KEY(EMPLEADOID)
+REFERENCES EMPLEADOS (EMPLEADOID)
+on delete restrict on update restrict;
+
+ALTER TABLE DETALLE_ORDENES ADD CONSTRAINT FK_DETALLE__ORDEN_DET_ORDENES FOREIGN KEY(ORDENID)
+REFERENCES ORDENES (ORDENID)
+on delete restrict on update restrict;
+
+ALTER TABLE DETALLE_ORDENES ADD CONSTRAINT FK_DETALLE__PROD_DETA_PRODUCTO FOREIGN KEY(PRODUCTOID)
+REFERENCES PRODUCTOS (PRODUCTOID)
+on delete restrict on update restrict;
+
+ALTER TABLE PRODUCTOS ADD CONSTRAINT FK_PRODUCTO_CATE_PROD_CATEGORI FOREIGN KEY(CATEGORIAID)
+REFERENCES CATEGORIAS (CATEGORIAID)
+on delete restrict on update restrict;
+
+ALTER TABLE PRODUCTOS ADD CONSTRAINT FK_PRODUCTO_PROV_PROD_PROVEEDO FOREIGN KEY(PROVEEDORID)
+REFERENCES PROVEEDORES (PROVEEDORID)
+on delete restrict on update restrict;
+
+ALTER TABLE EMPLEADOS ADD CONSTRAINT FK_EMPLEADO_REPORTA FOREIGN KEY(REPORTA_A)
+REFERENCES EMPLEADOS (EMPLEADOID)
+on delete restrict on update restrict;
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+###<a name="modelo_bdd">Modelo de la BDD</a>
+
+El modelo de la BDD se la realizo en el programa PowerDesigner para tener una aproximacion real de las entidades que participarán en
+el proyecto. El modelo quedo de la siguiente manera
+
+<p align="center">
+
+<img src="https://github.com/edijav85/Tec_Web_EL/proyecto1erBim/BDD/imagenes/bdd.jpg"width="500" height="800">
+
+</p>
