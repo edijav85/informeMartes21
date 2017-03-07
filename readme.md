@@ -2,14 +2,14 @@
 -------------------------------------------
 ###Materia: Tecnologias Web con Java Script
 ###Tema: Introduccion a la Web
-###Fecha: 27/10/2016
+###Fecha: 21/12/2016
 ###Profesor:TANIA CALLE Y ADRIAN EGUEZ
 
 #INDICE DE CONTENIDOS
 -------------------------------------------
 - <a href="#tema">Tema</a>
 - <a href="#objetivos">Objetivos</a>
-- <a href="#marco-teorico">Modelo de la BDD</a>
+- <a href="#marco-teorico">Sails, Assets, Views, Pipelines, Controllers</a>
  * <a href="#modelo_bdd">Script de la BDD</a>
  * <a href="#script_bdd">Github</a>
 - <a href="#desarrollo">Desarrollo de la Práctica</a>
